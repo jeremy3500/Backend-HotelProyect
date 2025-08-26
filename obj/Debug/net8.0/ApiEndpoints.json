@@ -1,0 +1,170 @@
+[
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetDataDashboard",
+    "RelativePath": "api/Acceso/getDataDashboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetDataGrafic",
+    "RelativePath": "api/Acceso/getDatosGrafic",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetHabitaciones",
+    "RelativePath": "api/Acceso/GetHabitaciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "habitacion",
+        "Type": "Proyecto_Hoteleria.Models.DTOs.HabitacionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetReservas",
+    "RelativePath": "api/Acceso/getReservas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetReservasListAdm",
+    "RelativePath": "api/Acceso/getReservasList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetUsuarioByIdAsync",
+    "RelativePath": "api/Acceso/getUsuarioById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "GetUsuariosListAsync",
+    "RelativePath": "api/Acceso/getUsuariosList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "InsertReserva",
+    "RelativePath": "api/Acceso/InsertReserva",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "InsReserva",
+        "Type": "Proyecto_Hoteleria.Models.DTOs.InsertReservaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "Login",
+    "RelativePath": "api/Acceso/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "Proyecto_Hoteleria.Models.DTOs.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "ModificarReserva",
+    "RelativePath": "api/Acceso/modificarReserva",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reserva",
+        "Type": "Proyecto_Hoteleria.Models.DTOs.ModificarReservaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "InsertProductAsync",
+    "RelativePath": "api/Acceso/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "Proyecto_Hoteleria.Models.DTOs.UsuarioDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Proyecto_Hoteleria.Controllers.AccesoController",
+    "Method": "ValidarToken",
+    "RelativePath": "api/Acceso/ValidarToken",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

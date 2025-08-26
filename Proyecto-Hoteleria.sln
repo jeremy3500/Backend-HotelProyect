@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto-Hoteleria", "Proyecto-Hoteleria.csproj", "{C0942FFB-6E52-4345-A08A-ED4CC4BFA123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestingXUnit.Tests", "..\UnitTestingXUnit.Tests\UnitTestingXUnit.Tests.csproj", "{4486BC19-D1FA-4525-B2B6-5705234C4828}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0942FFB-6E52-4345-A08A-ED4CC4BFA123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0942FFB-6E52-4345-A08A-ED4CC4BFA123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0942FFB-6E52-4345-A08A-ED4CC4BFA123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0942FFB-6E52-4345-A08A-ED4CC4BFA123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4486BC19-D1FA-4525-B2B6-5705234C4828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4486BC19-D1FA-4525-B2B6-5705234C4828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4486BC19-D1FA-4525-B2B6-5705234C4828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4486BC19-D1FA-4525-B2B6-5705234C4828}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6EB2272-9DB4-4FAA-926B-2D0152E680C6}
+	EndGlobalSection
+EndGlobal
