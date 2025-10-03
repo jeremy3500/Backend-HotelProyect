@@ -1,13 +1,15 @@
-﻿namespace Proyecto_Hoteleria.Models.RESPONSES
+﻿using System.Text.Json.Serialization;
+
+namespace Proyecto_Hoteleria.Models.RESPONSES
 {
     public class ReservaResponse
     {
-        public int id{ get; set; }
-        public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_fin { get; set; }
-        public string estado_reserva { get; set; }
-        public decimal monto_total { get; set; }
-        public int numero_habitacion { get; set; }
-        public string tipo_habitacion { get; set; }
+        [JsonPropertyName("ID")] public int ID{ get; set; }
+        [JsonPropertyName("FECHA_INICIO")] public DateTime FECHA_INICIO { get; set; }
+        [JsonPropertyName("FECHA_FIN")] public DateTime FECHA_FIN { get; set; }
+        [JsonPropertyName("ESTADO_RESERVA")] public string ESTADO_RESERVA { get; set; }
+        [JsonPropertyName("MONTO_TOTAL")] public decimal MONTO_TOTAL { get; set; }
+        [JsonPropertyName("NUMERO_HABITACION")] public string NUMERO_HABITACION { get; set; }
+        [JsonPropertyName("TIPO_HABITACION")] public string TIPO_HABITACION { get; set; }
     }
 }

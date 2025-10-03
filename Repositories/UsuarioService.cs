@@ -11,262 +11,166 @@ namespace Proyecto_Hoteleria.Repositories
     public class UsuarioService : IUsuarioService
     {
         private readonly DbContextClass _dbContext;
-
-
-        private readonly IDbContextWrapper _dbWrapper;
-
-      
-        public UsuarioService(IDbContextWrapper dbWrapper)
-        {
-            _dbWrapper = dbWrapper;
-        }
-
-        public async Task<List<Usuario>> GetUsuariosListAsyncT()
-        {
-            return await _dbWrapper.ExecuteUsuarioFromSqlRaw("SP_GetUsuarioList");
-        }
-
-        public async Task<IEnumerable<Usuario>> GetUsuarioByIdAsyncT(int UsuarioId)
-        {
-            var param = new SqlParameter("@UsuarioId", UsuarioId);
-            return await _dbWrapper.ExecuteUsuarioFromSqlRaw("exec SP_GetUsuarioByID @UsuarioId", param);
-        }
-
-        public async Task<List<Usuario>> RegisterT(UsuarioDTO usuario)
-        {
-            var parameters = new[]
-            {
-                new SqlParameter("@Id_Perfil", 2),
-                new SqlParameter("@Nombres", usuario.Nombre),
-                new SqlParameter("@Contraseña", usuario.Clave),
-                new SqlParameter("@Email", usuario.Correo),
-                new SqlParameter("@Dni", usuario.Dni)
-            };
-
-            return await _dbWrapper.ExecuteUsuarioFromSqlRaw("exec SP_InsertUsuario @Id_Perfil, @Nombres, @Contraseña, @Email, @Dni", parameters);
-        }
-
-        public async Task<List<Usuario>> LoginT(LoginDTO usuario)
-        {
-            var parameters = new[]
-            {
-                new SqlParameter("@Email", usuario.Correo),
-                new SqlParameter("@Contraseña", usuario.Clave)
-            };
-
-            return await _dbWrapper.ExecuteUsuarioFromSqlRaw("exec SP_LoggerUsuario @Email, @Contraseña", parameters);
-        }
-
-        public async Task<IEnumerable<ReservaResponse>> GetReservasT(int id_usuario)
-        {
-            var param = new SqlParameter("@id_usuario", id_usuario);
-            return await _dbWrapper.ExecuteReservaResponseFromSqlRaw("exec SP_GetReservasPorUsuario @id_usuario", param);
-        }
-
-        public async Task<List<HabitacionReservadoResponse>> GetHabitacionesReservadosT(HabitacionDTO habitacion)
-        {
-            var parameters = new[]
-            {
-                new SqlParameter("@fecha_inicio", habitacion.fecha_inicio),
-                new SqlParameter("@fecha_fin", habitacion.fecha_fin),
-                new SqlParameter("@tipo_habitacion", habitacion.tipo_habitacion)
-            };
-
-            return await _dbWrapper.ExecuteHabitacionReservadoResponseFromSqlRaw("exec SP_GetHabitacionReservInFech @fecha_inicio, @fecha_fin, @tipo_habitacion", parameters);
-        }
-
-        public async Task<List<HabitacionResponse>> GetHabitacionesT(HabitacionDTO habitacion)
-        {
-            var param = new SqlParameter("@tipo_habitacion", habitacion.tipo_habitacion);
-            return await _dbWrapper.ExecuteHabitacionResponseFromSqlRaw("exec SP_GetHabitacionPorTipo @tipo_habitacion", param);
-        }
-
-        public async Task<List<HabitacionResponse>> GetPrecioNocheT(int id)
-        {
-            var param = new SqlParameter("@id_habitacion", id);
-            return await _dbWrapper.ExecuteHabitacionResponseFromSqlRaw("exec SP_GetDataHabit @id_habitacion", param);
-        }
-
-        public async Task<List<ReservaResponse>> InsertReservaT(InsertReservaDTO reserva, decimal precio)
-        {
-            var parameters = new[]
-            {
-                new SqlParameter("@id_usuario", reserva.id_usuario),
-                new SqlParameter("@id_habitacion", reserva.id_habitacion),
-                new SqlParameter("@fecha_inicio", reserva.fecha_inicio),
-                new SqlParameter("@fecha_fin", reserva.fecha_fin),
-                new SqlParameter("@estado_reserva", "Pendiente"),
-                new SqlParameter("@monto_total", precio)
-            };
-
-            return await _dbWrapper.ExecuteReservaResponseFromSqlRaw("exec SP_InsertReserva @id_usuario, @id_habitacion, @fecha_inicio, @fecha_fin, @estado_reserva, @monto_total", parameters);
-        }
-
-        public async Task<List<Reserva>> GetReservasListAdmT()
-        {
-            return await _dbWrapper.ExecuteReservaFromSqlRaw("SP_GetReservasList");
-        }
-
-        public async Task<IEnumerable<ReservaResponse>> ModificarReservaT(ModificarReservaDTO reserva)
-        {
-            var parameters = new[]
-            {
-                new SqlParameter("@id_reserva", reserva.id_reserva),
-                new SqlParameter("@estado_reserva", reserva.estado_reserva)
-            };
-
-            return await _dbWrapper.ExecuteReservaResponseFromSqlRaw("exec SP_ModificReserva @id_reserva, @estado_reserva", parameters);
-        }
-
-        public async Task<IEnumerable<DashboardResponse>> GetDataDashboardT()
-        {
-            return await _dbWrapper.ExecuteDashboardResponseFromSqlRaw("SP_GetDatosParaDashboard");
-        }
-
-        public async Task<List<DatosGraficResponse>> GetDataGraficT()
-        {
-            return await _dbWrapper.ExecuteDatosGraficResponseFromSqlRaw("SP_GetDataGrafico");
-        }
-
-
         public UsuarioService(DbContextClass dbContext)
         {
             _dbContext = dbContext;
         }
-
-        
         public async Task<List<Usuario>> GetUsuariosListAsync()
         {
             return await _dbContext.Usuario
-                .FromSqlRaw<Usuario>("SP_GetUsuarioList")
+                .FromSqlRaw("SP_GetUsuarioList")
             .ToListAsync();
         }
 
-        public async Task<IEnumerable<Usuario>> GetUsuarioByIdAsync(int UsuarioId)
+        public async Task<IEnumerable<Usuario>> GetUsuarioByIdAsync(int USUARIO_ID)
         {
-            var param = new SqlParameter("@UsuarioId", UsuarioId);
+            var PARAMETER = new SqlParameter("@USUARIO_ID", USUARIO_ID);
 
-            var UsuarioDetails = await Task.Run(() => _dbContext.Usuario
-                .FromSqlRaw(@"exec SP_GetUsuarioByID @UsuarioId", param).ToListAsync());
-            return UsuarioDetails;
+            var USER_DETAILS = await Task.Run(() => _dbContext.Usuario
+                .FromSqlRaw(@"EXEC SP_GetUsuarioByID @USUARIO_ID", PARAMETER).ToListAsync());
+            return USER_DETAILS;
         }
 
-        public async Task<List<Usuario>> Register (UsuarioDTO usuario)
+        public async Task<List<Usuario>> Register(UsuarioDTO USUARIO)
         {
-            var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@Id_Perfil", 2));
-            paraneter.Add(new SqlParameter("@Nombres", usuario.Nombre));
-            paraneter.Add(new SqlParameter("@Contraseña", usuario.Clave));
-            paraneter.Add(new SqlParameter("@Email", usuario.Correo));
-            paraneter.Add(new SqlParameter("@Dni", usuario.Dni));
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@ID_PERFIL", USUARIO.ID_PERFIL),
+                new SqlParameter("@NOMBRES", USUARIO.NOMBRES),
+                new SqlParameter("@APELLIDOS", USUARIO.APELLIDOS),
+                new SqlParameter("@TELEFONO", USUARIO.TELEFONO),
+                new SqlParameter("@TIPO_DOCUMENTO_ID", USUARIO.TIPO_DOCUMENTO_ID),
+                new SqlParameter("@DOCUMENTO", USUARIO.DOCUMENTO),
+                new SqlParameter("@EMAIL", USUARIO.EMAIL),
+                new SqlParameter("@PASSWORDS", USUARIO.PASSWORD)
+            };
 
             return await _dbContext.Usuario
-                .FromSqlRaw<Usuario>(@"exec SP_InsertUsuario @Id_Perfil, @Nombres, @Contraseña, @Email, @Dni", paraneter.ToArray())
-            .ToListAsync();
+                .FromSqlRaw(@"EXEC SP_InsertUsuario 
+                      @ID_PERFIL, 
+                      @NOMBRES, 
+                      @APELLIDOS, 
+                      @TELEFONO, 
+                      @TIPO_DOCUMENTO_ID, 
+                      @DOCUMENTO, 
+                      @EMAIL, 
+                      @PASSWORDS",
+                              PARAMETERS.ToArray())
+                .ToListAsync();
         }
 
-        public async Task<List<Usuario>> Login(LoginDTO usuario)
+
+        public async Task<List<Usuario>> Login(LoginDTO USUARIO)
         {
-            var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@Email", usuario.Correo));
-            paraneter.Add(new SqlParameter("@Contraseña", usuario.Clave));
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@EMAIL_DOCUMENTO", USUARIO.EMAIL_DOCUMENTO),
+                new SqlParameter("@PASSWORDS", USUARIO.PASSWORD)
+            };
             
-
             return await _dbContext.Usuario
-                .FromSqlRaw<Usuario>(@"exec SP_LoggerUsuario @Email, @Contraseña", paraneter.ToArray())
+                .FromSqlRaw(@"EXEC SP_LoggerUsuario @EMAIL_DOCUMENTO, @PASSWORDS", PARAMETERS.ToArray())
             .ToListAsync();
         }
 
-        public async Task<IEnumerable<ReservaResponse>> GetReservas(int id_usuario)
+        public async Task<IEnumerable<ReservaResponse>> GetReservas(int ID_USER)
         {
-            var param = new SqlParameter("@id_usuario", id_usuario);
+            var PARAMETER = new SqlParameter("@ID_USUARIO", ID_USER);
 
             var ReservaDetails = await Task.Run(() => _dbContext.ReservaResponse
-                .FromSqlRaw(@"exec SP_GetReservasPorUsuario @id_usuario", param).ToListAsync());
+                .FromSqlRaw(@"EXEC SP_GetReservasPorUsuario @ID_USUARIO", PARAMETER).ToListAsync());
             return ReservaDetails;
         }
 
 
-        public async Task<List<HabitacionReservadoResponse>> GetHabitacionesReservados(HabitacionDTO habitacion)
+        public async Task<List<HabitacionReservadoResponse>> GetHabitacionesReservados(HabitacionDTO HABITACION)
         {
-            var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@fecha_inicio", habitacion.fecha_inicio));
-            paraneter.Add(new SqlParameter("@fecha_fin", habitacion.fecha_fin));
-            paraneter.Add(new SqlParameter("@tipo_habitacion", habitacion.tipo_habitacion));
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@FECHA_INICIO", HABITACION.FECHA_INICIO),
+                new SqlParameter("@FECHA_FIN", HABITACION.FECHA_FIN),
+                new SqlParameter("@TIPO_HABITACION_ID", HABITACION.TIPO_HABITACION_ID)
+            };
 
             return await _dbContext.HabitacionReservadoResponse
-                .FromSqlRaw<HabitacionReservadoResponse>(@"exec SP_GetHabitacionReservInFech @fecha_inicio, @fecha_fin, @tipo_habitacion", paraneter.ToArray())
+                .FromSqlRaw(@"EXEC SP_GetHabitacionReservInFech @FECHA_INICIO, @FECHA_FIN, @TIPO_HABITACION_ID", PARAMETERS.ToArray())
             .ToListAsync();
         }
 
         public async Task<List<HabitacionResponse>> GetHabitaciones(HabitacionDTO habitacion)
         {
             var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@tipo_habitacion", habitacion.tipo_habitacion));
+            paraneter.Add(new SqlParameter("@TIPO_HABITACION_ID", habitacion.TIPO_HABITACION_ID));
 
             return await _dbContext.HabitacionResponse
-                .FromSqlRaw<HabitacionResponse>(@"exec SP_GetHabitacionPorTipo @tipo_habitacion", paraneter.ToArray())
+                .FromSqlRaw(@"EXEC SP_GetHabitacionPorTipo @TIPO_HABITACION_ID", paraneter.ToArray())
             .ToListAsync();
         }
 
 
-        public async Task<List<HabitacionResponse>> GetPrecioNoche(int id)
+        public async Task<List<HabitacionResponse>> GetPrecioNoche(int ID)
         {
-            var parm = new List<SqlParameter>();
-            parm.Add(new SqlParameter("@id_habitacion", id));
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@ID_HABITACION", ID)
+            };
 
             return await _dbContext.HabitacionResponse
-                .FromSqlRaw<HabitacionResponse>(@"exec SP_GetDataHabit @id_habitacion", parm.ToArray())
+                .FromSqlRaw(@"EXEC SP_GetDataHabit @ID_HABITACION", PARAMETERS.ToArray())
             .ToListAsync();
 
         }
 
 
-        public async Task<List<ReservaResponse>> InsertReserva(InsertReservaDTO InsReserva, decimal precio)
+        public async Task<List<ReservaResponse>> InsertReserva(InsertReservaDTO INS_RESERVA, decimal PRECIO)
         {
-            var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@id_usuario", InsReserva.id_usuario));
-            paraneter.Add(new SqlParameter("@id_habitacion", InsReserva.id_habitacion));
-            paraneter.Add(new SqlParameter("@fecha_inicio", InsReserva.fecha_inicio));
-            paraneter.Add(new SqlParameter("@fecha_fin", InsReserva.fecha_fin));
-            paraneter.Add(new SqlParameter("@estado_reserva", "Pendiente"));
-            paraneter.Add(new SqlParameter("@monto_total", precio));
-
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@ID_USUARIO", INS_RESERVA.ID_USUARIO),
+                new SqlParameter("@ID_HABITACION", INS_RESERVA.ID_HABITACION),
+                new SqlParameter("@ID_HABITACION", INS_RESERVA.ID_HABITACION),
+                new SqlParameter("@FECHA_INICIO", INS_RESERVA.FECHA_INICIO),
+                new SqlParameter("@FECHA_FIN", INS_RESERVA.FECHA_FIN),
+                new SqlParameter("@ID_ESTADO_RESERVA", 1),
+                new SqlParameter("@MONTO_RESERVA", PRECIO)
+            };
             return await _dbContext.ReservaResponse
-                .FromSqlRaw<ReservaResponse>(@"exec SP_InsertReserva @id_usuario, @id_habitacion, @fecha_inicio, @fecha_fin, @estado_reserva, @monto_total", paraneter.ToArray())
+                .FromSqlRaw(@"EXEC SP_InsertReserva @ID_USUARIO, @ID_HABITACION, @FECHA_INICIO, @FECHA_FIN, @ID_ESTADO_RESERVA, @MONTO_RESERVA", PARAMETERS.ToArray())
             .ToListAsync();
         }
 
         public async Task<List<Reserva>> GetReservasListAdm()
         {
             return await _dbContext.Reserva
-                .FromSqlRaw<Reserva>("SP_GetReservasList")
+                .FromSqlRaw("SP_GetReservasList")
             .ToListAsync();
         }
 
 
         public async Task<IEnumerable<ReservaResponse>> ModificarReserva(ModificarReservaDTO reserva)
         {
-            var paraneter = new List<SqlParameter>();
-            paraneter.Add(new SqlParameter("@id_reserva", reserva.id_reserva));
-            paraneter.Add(new SqlParameter("@estado_reserva", reserva.estado_reserva));
+            var PARAMETERS = new List<SqlParameter>
+            {
+                new SqlParameter("@ID_RESERVA", reserva.ID_RESERVA),
+                new SqlParameter("@ESTADO_RESERVA_ID", reserva.ESTADO_RESERVA_ID)
+            };
 
             return await _dbContext.ReservaResponse
-                .FromSqlRaw<ReservaResponse>(@"exec SP_ModificReserva @id_reserva, @estado_reserva", paraneter.ToArray())
+                .FromSqlRaw(@"EXEC [SP_UpdateReserva] @ID_RESERVA, @ESTADO_RESERVA_ID", PARAMETERS.ToArray())
             .ToListAsync();
         }
 
         public async Task<IEnumerable<DashboardResponse>> GetDataDashboard()
         {
             return await _dbContext.DashboardResponse
-                .FromSqlRaw<DashboardResponse>("SP_GetDatosParaDashboard")
+                .FromSqlRaw("SP_GetDatosParaDashboard")
             .ToListAsync();
         }
 
         public async Task<List<DatosGraficResponse>> GetDataGrafic()
         {
             return await _dbContext.DatosGraficResponse
-                .FromSqlRaw<DatosGraficResponse>("SP_GetDataGrafico")
+                .FromSqlRaw("SP_GetDataGrafico")
             .ToListAsync();
         }
     }

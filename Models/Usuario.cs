@@ -1,14 +1,18 @@
-﻿namespace Proyecto_Hoteleria.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Proyecto_Hoteleria.Models
 {
-    
+
+
     public class Usuario
     {
-        public int Id { get; set; }
-        public int Id_Perfil { get; set; }
-        public string Nombres { get; set; }
-        public string Contraseña { get; set; }
-        public string Email { get; set; }
-        public DateTime Fecha_Registro { get; set; }
-        public string Dni { get; set; }
+        [JsonPropertyName("ID")] public int ID { get; set; }
+        [JsonPropertyName("ID_PERFIL")] public int ID_PERFIL { get; set; }
+        [JsonPropertyName("NOMBRES")] public string NOMBRES { get; set; }
+        [JsonPropertyName("TIPO_DOCUMENTO")] public string TIPO_DOCUMENTO { get; set; }
+        [JsonPropertyName("DOCUMENTO")] public string DOCUMENTO { get; set; }
+        [JsonPropertyName("EMAIL")] public string EMAIL { get; set; }
+        [JsonPropertyName("PASSWORD")] public string PASSWORD { get; set; }
+        [JsonPropertyName("FECHA_REGISTRO")] public DateTime FECHA_REGISTRO { get; set; }
     }
 }

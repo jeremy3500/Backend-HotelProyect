@@ -38,8 +38,8 @@ namespace Proyecto_Hoteleria.Custom
             //crear la informacion del usuario para token
             var userClaims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, modelo.Id.ToString()),
-                new Claim(ClaimTypes.Email, modelo.Email!)
+                new Claim(ClaimTypes.NameIdentifier, modelo.ID.ToString()),
+                new Claim(ClaimTypes.Email, modelo.EMAIL!)
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]!));

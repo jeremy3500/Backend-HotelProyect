@@ -10,19 +10,19 @@ using System.Collections.Generic;
 
 namespace Proyecto_Hoteleria.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("API/[controller]")]
     [ApiController]
     public class AccesoController : ControllerBase
     {
         private readonly IUsuarioService usuarioService;
-        private readonly Utilidades _utilidades;
+        private readonly Utilidades UTILS;
         public AccesoController(IUsuarioService usuarioService, Utilidades utilidades)
         {
             this.usuarioService = usuarioService;
-            this._utilidades = utilidades;
+            this.UTILS = utilidades;
         }
 
-        [HttpGet("getUsuariosList")]
+        [HttpGet("GET_LIST_USER")]
         public async Task<IActionResult> GetUsuariosListAsync()
         {
             try {
@@ -34,46 +34,40 @@ namespace Proyecto_Hoteleria.Controllers
                     detail = response
                 });
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
-        [HttpGet("getUsuarioById")]
-        public async Task<IActionResult> GetUsuarioByIdAsync(int Id)
+        [HttpGet("GET_USER_BY_ID")]
+        public async Task<IActionResult> GetUsuarioByIdAsync(int ID)
         {
             try
             {
-                var response = await usuarioService.GetUsuarioByIdAsync(Id);
+                var response = await usuarioService.GetUsuarioByIdAsync(ID);
                 if (response == null) return null;
                 return Ok(new
                 {
                     detail = response
                 });
             }
-            catch
-            {
-                throw;
-            }
+            catch { throw; }
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> InsertProductAsync(UsuarioDTO usuario)
+        [HttpPost("REGISTER")]
+        public async Task<IActionResult> InsertProductAsync(UsuarioDTO USUARIO)
         {
-            if (usuario == null) return BadRequest();
+            if (USUARIO == null) return BadRequest();
             try
             {
-                var response = await usuarioService.Register(usuario);
+                var RESPONSE = await usuarioService.Register(USUARIO);
 
-                string wMessage = "";
-                if (response.Count() > 0) wMessage = "succesfull";
+                string MESSAGE = "";
+                if (RESPONSE.Count() > 0) MESSAGE = "SUCCESFULL";
                 return Ok(new
                 {
                     isSuccess = true,
-                    detail = response,
-                    message = wMessage,
-                    token = _utilidades.generarJWT(response[0])
+                    detail = RESPONSE,
+                    message = MESSAGE,
+                    token = UTILS.generarJWT(RESPONSE[0])
                 });
             }
             catch
@@ -86,23 +80,23 @@ namespace Proyecto_Hoteleria.Controllers
             }
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginDTO usuario)
+        [HttpPost("LOGIN")]
+        public async Task<IActionResult> Login(LoginDTO USUARIO)
         {
-            if (usuario == null) return BadRequest();
+            if (USUARIO == null) return BadRequest();
             try
             {
-                var response = await usuarioService.Login(usuario);
+                var RESPONSE = await usuarioService.Login(USUARIO);
 
-                string wMessage = "";
-                if (response.Count() > 0) wMessage = "succesfull";
+                string wMESSAGE = "";
+                if (RESPONSE.Count() > 0) wMESSAGE = "SUCCESFULL";
 
                 return Ok(new
                 {
-                    isSuccess = true,
-                    detail = response,
-                    message = wMessage,
-                    token = _utilidades.generarJWT(response[0])
+                    SUCCESS = true,
+                    DETAIL = RESPONSE,
+                    MESSAGE = wMESSAGE,
+                    TOKEN = UTILS.generarJWT(RESPONSE[0])
 
                 }); 
             }
@@ -110,79 +104,70 @@ namespace Proyecto_Hoteleria.Controllers
             {
                 return Ok(new
                 {
-                    isSuccess = false,
-                    token = "",
-                    message = ex.Message
+                    SUCCESS = false,
+                    TOKEN = "",
+                    MESSAGE = ex.Message
 
                 });
-                //return StatusCode(StatusCodes.Status500InternalServerError, new
-                //{
-                //    isSuccess = false,
-                //    token = "",
-                //    message = ex.Message
-                //});
             }
         }
 
-        [HttpGet("ValidarToken")]
-        public IActionResult ValidarToken([FromQuery]String token)
+        [HttpGet("VALIDATION_TOKEN")]
+        public IActionResult ValidarToken([FromQuery]String TOKEN)
         {
 
-            bool respuesta = _utilidades.validarToken(token);
+            bool RESPONSE = UTILS.validarToken(TOKEN);
 
-            string wMessage = "";
-            if (respuesta) wMessage = "succesfull";
+            string wMESSAGE = "";
+            if (RESPONSE) wMESSAGE = "SUCCESFULL";
 
             return Ok(new
             {
-                isSuccess = respuesta,
-                message = wMessage
+                SUCCESS = RESPONSE,
+                MESSAGE = wMESSAGE
             });
         }
 
-        [HttpGet("getReservas")]
-        public async Task<IActionResult> GetReservas(int Id)
+        [HttpGet("GET_RESERVAS")]
+        public async Task<IActionResult> GetReservas(int ID)
         {
-            var response = await usuarioService.GetReservas(Id);
-            if (response == null) return null;
+            var RESPONSE = await usuarioService.GetReservas(ID);
+            if (RESPONSE == null) return null;
 
             return Ok(new
             {
-                value = response
+                VALUE = RESPONSE
             });
         }
 
-        [HttpPost("GetHabitaciones")]
-        public async Task<IActionResult> GetHabitaciones(HabitacionDTO habitacion)
+        [HttpPost("GET_HABITACIONES")]
+        public async Task<IActionResult> GetHabitaciones(HabitacionDTO HABITACION)
         {
-            if (habitacion == null) return BadRequest();
+            if (HABITACION == null) return BadRequest();
             try
             {
-                var response_reservas = await usuarioService.GetHabitacionesReservados(habitacion);                
+                var RESPONSE_RESERVAS = await usuarioService.GetHabitacionesReservados(HABITACION);                
 
-                var response_habitaciones = await usuarioService.GetHabitaciones(habitacion);
+                var RESPONSE_HABITACIONES = await usuarioService.GetHabitaciones(HABITACION);
 
-                List<HabitacionResponse> list_habitaciones = new List<HabitacionResponse>(response_habitaciones);
+                List<HabitacionResponse> LIST_HABITACIONES = new List<HabitacionResponse>(RESPONSE_HABITACIONES);
 
-                foreach (var value_reserv in response_reservas)
+                foreach (var VALUE_RESERV in RESPONSE_RESERVAS)
                 {
-                    foreach (var value_habit in response_habitaciones)
+                    foreach (var VALUE_HABIT in RESPONSE_HABITACIONES)
                     {
-                        if (value_reserv.id == value_habit.id)
+                        if (VALUE_RESERV.ID == VALUE_HABIT.ID)
                         {
-                            list_habitaciones.Remove(value_habit);
+                            LIST_HABITACIONES.Remove(VALUE_HABIT);
                             break;
                         }
                     }
                 }
-                var response = list_habitaciones.ToArray();
-
-                string wMessage = "";
-                if (response.Count() > 0) wMessage = "succesfull";
+                var RESPONSE = LIST_HABITACIONES.ToArray();
 
                 return Ok(new
                 {
-                    habitaciones = response
+                    HABITACIONES = RESPONSE
                 });
                 
             }
@@ -190,60 +175,60 @@ namespace Proyecto_Hoteleria.Controllers
             {
                 return Ok(new
                 {
-                    isSuccess = false,
-                    message = ex.Message
+                    SUCCESS = false,
+                    MESSAGE = ex.Message
                 });
             }
         }
 
-        [HttpPost("InsertReserva")]
-        public async Task<IActionResult> InsertReserva(InsertReservaDTO InsReserva)
+        [HttpPost("INSERT_RESERVA")]
+        public async Task<IActionResult> InsertReserva(InsertReservaDTO INS_RESERVA)
         {
-            if (InsReserva == null) return BadRequest();
+            if (INS_RESERVA == null) return BadRequest();
             try
             {
-                var response_reservas = await usuarioService.GetPrecioNoche(InsReserva.id_habitacion);
+                var RESPONSE_RESERVA = await usuarioService.GetPrecioNoche(INS_RESERVA.ID_HABITACION);
 
-                var dias = InsReserva.fecha_fin - InsReserva.fecha_inicio;
+                var DIAS = INS_RESERVA.FECHA_FIN - INS_RESERVA.FECHA_INICIO;
 
 
-                decimal wprecioTotal = response_reservas[0].precio_noche * dias.Days;
+                decimal PRECIO_TOTAL = RESPONSE_RESERVA[0].PRECIO_NOCHE * DIAS.Days;
 
-                if (wprecioTotal == 0) wprecioTotal = response_reservas[0].precio_noche;
+                if (PRECIO_TOTAL == 0) PRECIO_TOTAL = RESPONSE_RESERVA[0].PRECIO_NOCHE;
 
-                var response = await usuarioService.InsertReserva(InsReserva, wprecioTotal);
+                var RESPONSE = await usuarioService.InsertReserva(INS_RESERVA, PRECIO_TOTAL);
 
-                string wMessage = "";
-                if (response.Count() > 0) wMessage = "succesfull";
+                string wMESSAGE = "";
+                if (RESPONSE.Count() > 0) wMESSAGE = "SUCCESFULL";
 
                 return Ok(new
                 {
-                    isSuccess = true,
-                    message = wMessage
+                    SUCCESS = true,
+                    MESSAGE = wMESSAGE
                 });
             }
             catch (Exception ex)
             {
                 return Ok(new
                 {
-                    isSuccess = false,
-                    message = ex.Message
+                    SUCCESS = false,
+                    MESSAGE = ex.Message
                 });
             }
         }
 
 
-        [HttpGet("getReservasList")]
+        [HttpGet("GET_RESERVAS_LIST")]
         public async Task<IActionResult> GetReservasListAdm()
         {
             try
             {
-                var response = await usuarioService.GetReservasListAdm();
-                if (response == null) return null;
+                var RESPONSE = await usuarioService.GetReservasListAdm();
+                if (RESPONSE == null) return null;
 
                 return Ok(new
                 {
-                    value = response
+                    value = RESPONSE
                 });
             }
             catch
@@ -252,44 +237,44 @@ namespace Proyecto_Hoteleria.Controllers
             }
         }
 
-        [HttpPost("modificarReserva")]
+        [HttpPost("UPDATE_RESERVA")]
         public async Task<IActionResult> ModificarReserva(ModificarReservaDTO reserva)
         {
-            var response = await usuarioService.ModificarReserva(reserva);
-            if (response == null) return null;
+            var RESPONSE = await usuarioService.ModificarReserva(reserva);
+            if (RESPONSE == null) return null;
 
             return Ok(new
             {
-                isSuccess = true,
-                message = "Modificado con Exito."
+                SUCCESS = true,
+                MESSAGE = "RESERVA MODIFICADA CON EXITO."
             });
         }
 
-        [HttpGet("getDataDashboard")]
+        [HttpGet("GET_DATA_DASHBOARD")]
         public async Task<IActionResult> GetDataDashboard()
         {
             try
             {
-                var response = await usuarioService.GetDataDashboard();
-                if (response == null) return null;
+                var RESPONSE = await usuarioService.GetDataDashboard();
+                if (RESPONSE == null) return null;
 
                 return Ok(new
                 {
-                    value = response
+                    VALUE = RESPONSE
                 });
             }
             catch { throw; }
         }
 
-        [HttpGet("getDatosGrafic")]
+        [HttpGet("GET_DATOS_GRAFIC")]
         public async Task<IActionResult> GetDataGrafic()
         {
-            var response = await usuarioService.GetDataGrafic();
-            if (response == null) return null;
+            var RESPONSE = await usuarioService.GetDataGrafic();
+            if (RESPONSE == null) return null;
 
             return Ok(new
             {
-                value = response
+                VALUE = RESPONSE
             });
         }
     }

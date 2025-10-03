@@ -1,15 +1,17 @@
-﻿namespace Proyecto_Hoteleria.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Proyecto_Hoteleria.Models
 {
     
     public class Reserva
     {
-        public int Id { get; set; }
-        public string Cliente { get; set; }
-        public string Dni { get; set; }
-        public int numero_habitacion { get; set; }
-        public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_fin { get; set; }
-        public decimal Monto_total { get; set; }
-        public string Estado { get; set; }
+        [JsonPropertyName("ID")] public int ID { get; set; }
+        [JsonPropertyName("CLIENTE")] public string CLIENTE { get; set; }
+        [JsonPropertyName("NRO_DOCUMENTO")] public string NRO_DOCUMENTO { get; set; }
+        [JsonPropertyName("NUMERO_HABITACION")] public string NUMERO_HABITACION { get; set; }
+        [JsonPropertyName("FECHA_INICIO")] public DateTime FECHA_INICIO { get; set; }
+        [JsonPropertyName("FECHA_FIN")] public DateTime FECHA_FIN { get; set; }
+        [JsonPropertyName("MONTO_PAGO")] public decimal MONTO_PAGO { get; set; }
+        [JsonPropertyName("ESTADO")] public string ESTADO { get; set; }
     }
 }

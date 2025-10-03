@@ -1,10 +1,12 @@
-﻿namespace Proyecto_Hoteleria.Models.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace Proyecto_Hoteleria.Models.DTOs
 {
     public class HabitacionDTO
     {
-        public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_fin { get; set; }
-        public string tipo_habitacion { get; set; }
+        [JsonPropertyName("FECHA_INICIO")] public DateTime FECHA_INICIO { get; set; }
+        [JsonPropertyName("FECHA_FIN")] public DateTime FECHA_FIN { get; set; }
+        [JsonPropertyName("TIPO_HABITACION_ID")] public int TIPO_HABITACION_ID { get; set; }
     }
     public class IdHabitacionDTO
     {
