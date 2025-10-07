@@ -11,7 +11,7 @@ namespace Proyecto_Hoteleria.Models
         [JsonPropertyName("NUMERO_HABITACION")] public string NUMERO_HABITACION { get; set; }
         [JsonPropertyName("FECHA_INICIO")] public DateTime FECHA_INICIO { get; set; }
         [JsonPropertyName("FECHA_FIN")] public DateTime FECHA_FIN { get; set; }
-        [JsonPropertyName("MONTO_PAGO")] public decimal MONTO_PAGO { get; set; }
-        [JsonPropertyName("ESTADO")] public string ESTADO { get; set; }
+        [JsonPropertyName("MONTO_TOTAL")] public decimal MONTO_TOTAL { get; set; }
+        [JsonPropertyName("ESTADO_RESERVA")] public string ESTADO_RESERVA { get; set; }
     }
 }
