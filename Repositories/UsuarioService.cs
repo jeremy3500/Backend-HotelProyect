@@ -128,9 +128,8 @@ namespace Proyecto_Hoteleria.Repositories
             {
                 new SqlParameter("@ID_USUARIO", INS_RESERVA.ID_USUARIO),
                 new SqlParameter("@ID_HABITACION", INS_RESERVA.ID_HABITACION),
-                new SqlParameter("@ID_HABITACION", INS_RESERVA.ID_HABITACION),
-                new SqlParameter("@FECHA_INICIO", INS_RESERVA.FECHA_INICIO),
-                new SqlParameter("@FECHA_FIN", INS_RESERVA.FECHA_FIN),
+                new SqlParameter("@FECHA_INICIO", DateTime.Parse(INS_RESERVA.FECHA_INICIO.ToString()).ToString("yyyy-MM-dd")),
+                new SqlParameter("@FECHA_FIN", DateTime.Parse(INS_RESERVA.FECHA_FIN.ToString()).ToString("yyyy-MM-dd")),
                 new SqlParameter("@ID_ESTADO_RESERVA", 1),
                 new SqlParameter("@MONTO_RESERVA", PRECIO)
             };
