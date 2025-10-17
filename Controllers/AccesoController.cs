@@ -64,7 +64,7 @@ namespace Proyecto_Hoteleria.Controllers
                 if (RESPONSE.Count() > 0) MESSAGE = "SUCCESFULL";
                 return Ok(new
                 {
-                    isSuccess = true,
+                    SUCCESS = true,
                     detail = RESPONSE,
                     message = MESSAGE,
                     token = UTILS.generarJWT(RESPONSE[0])
@@ -74,7 +74,7 @@ namespace Proyecto_Hoteleria.Controllers
             {
                 return Ok(new
                 {
-                    isSuccess = false,
+                    SUCCESS = false,
                     message = "Ya existe el usuario."
                 });
             }
